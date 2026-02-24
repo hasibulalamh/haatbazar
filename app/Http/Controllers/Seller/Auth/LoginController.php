@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Buyer\Auth;
+namespace App\Http\Controllers\Seller\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    //create login form
+    //login form
     public function create()
     {
-        return view('auth.buyer.login');
+        return view('auth.seller.login');
     }
 
-    // login store
+    //login store
     public function store(Request $request)
     {
         $request->validate([
@@ -25,17 +25,18 @@ class LoginController extends Controller
         if (Auth::attempt([
             'email' =>$request->email,
             'password' =>$request->password,
-            'role' => 'buyer',
+            'role' => 'seller',
         ],$request->remember))
         {
             $request->session()->regenerate();
 
-            return redirect()->route('buyer.dashboard');
+            return redirect()->route('seller.dashboard');
         }
         return back()->withErrors([
-            'email' => 'Invalid credentials or not a buyer account.',
+            'email' => 'Invalid credentials or not a seller account.',
         ])->onlyInput('email');
     }
+
 
     // logout
     public function destroy(Request $request)
@@ -43,7 +44,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('buyer.login');
+        return redirect()->route('seller.login');
 
     }
- }
+}

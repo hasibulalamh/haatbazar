@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Buyer\Auth;
+namespace App\Http\Controllers\Seller\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-      public function create()
+    //register form
+    public function create()
     {
-        return view('auth.buyer.register');
+        return view('auth.seller.register');
     }
 
     // Handle register
@@ -31,13 +32,13 @@ class RegisterController extends Controller
             'email'    => $request->email,
             'phone'    => $request->phone,
             'password' => Hash::make($request->password),
-            'role'     => 'buyer',
+            'role'     => 'seller',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect()->route('buyer.dashboard');
+        return redirect()->route('seller.dashboard');
     }
 }

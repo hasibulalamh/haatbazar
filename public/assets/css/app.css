@@ -734,5 +734,72 @@ img { max-width: 100%; }
     .mobile-topbar {
         display: flex;
     }
+
+        /* ========================================
+       SELLER THEME - Amber/Orange
+    ======================================== */
+        :root {
+            --seller: #d97706;
+            --seller-dark: #b45309;
+            --seller-light: #fcd34d;
+        }
+
+        /* Seller Logo */
+        .seller-logo {
+            background: linear-gradient(135deg, var(--seller-light), var(--seller)) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+
+        /* Seller Badge */
+        .seller-badge {
+            background: rgba(245, 158, 11, 0.12) !important;
+            border: 1px solid rgba(245, 158, 11, 0.25) !important;
+            color: var(--seller-light) !important;
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 6px;
+        }
+
+        /* Seller Sidebar Active */
+        .seller-active {
+            background: rgba(217, 119, 6, 0.12) !important;
+            color: var(--seller-light) !important;
+        }
+
+        .seller-active .nav-icon {
+            color: var(--seller) !important;
+        }
+
+        /* Seller Avatar */
+        .seller-avatar {
+            background: linear-gradient(135deg, var(--seller), var(--seller-dark)) !important;
+        }
+
+        /* Seller Stat Icons */
+        .stat-icon.amber {
+            background: rgba(217, 119, 6, 0.12);
+            color: var(--seller-light);
+        }
+
+        /* Seller Submit Button */
+        .btn-seller {
+            background: linear-gradient(135deg, var(--seller), var(--seller-dark));
+        }
+
+        .btn-seller:hover {
+            box-shadow: 0 8px 25px rgba(217, 119, 6, 0.4);
+        }
+
+        /* Seller Section Title accent */
+        .seller-sidebar .nav-section-title {
+            color: rgba(252, 211, 77, 0.4);
+        }
 }
 
