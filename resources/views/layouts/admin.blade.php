@@ -53,7 +53,7 @@
 
             <div class="nav-section-title">Catalog</div>
 
-            <a href="#"
+            <a href="{{ route('admin.categories.index') }}"
                class="nav-item {{ request()->routeIs('admin.categories*') ? 'admin-active' : '' }}">
                 <i class="fa fa-layer-group nav-icon"></i> Categories
             </a>

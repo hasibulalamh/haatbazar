@@ -6,7 +6,7 @@ use App\Http\Controllers\Buyer\Auth\LoginController;
 use App\Http\Controllers\Seller\Auth\RegisterController as SellerRegisterController;
 use App\Http\Controllers\Seller\Auth\LoginController as SellerLoginController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
-
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 // Homepage
@@ -71,5 +71,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
         Route::post('/logout', [AdminLoginController::class, 'destroy'])->name('logout');
+        Route::resource('categories', CategoryController::class);
     });
 });
