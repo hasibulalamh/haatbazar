@@ -12,13 +12,18 @@ use App\Http\Controllers\Seller\ShopController;
 use App\Http\Controllers\Admin\ShopController as AdminShopController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController as PublicProductController;
 
-// Homepage
-Route::get('/', function () {
-    return view('welcome');
-});
 
-// Buyer routes
+
+// Public routes
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/products', [PublicProductController::class, 'index'])->name('products.index');
+    Route::get('/products/{product:slug}', [PublicProductController::class, 'show'])->name('products.show');
+
+
+    // Buyer routes
 Route::prefix('buyer')->name('buyer.')->group(function () {
 
     // Guest only

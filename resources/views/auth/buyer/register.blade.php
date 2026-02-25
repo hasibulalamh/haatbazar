@@ -41,7 +41,7 @@
         @endif
 
         {{-- Form --}}
-        <form method="POST" action="/register">
+        <form method="POST" action="{{ route('buyer.register.store') }}">
             @csrf
 
             {{-- Name --}}
