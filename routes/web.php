@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Buyer\AddressController;
 use App\Http\Controllers\Seller\DashboardController as SellerDashboardController;
+use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 
 // Public routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -85,6 +86,11 @@ Route::prefix('seller')->name('seller.')->group(function () {
          // Products
         Route::resource('products', ProductController::class);
         Route::delete('/products/images/{image}', [ProductController::class, 'destroyImage'])->name('products.images.destroy');
+
+        // Profile
+        Route::get('/profile', [SellerProfileController::class, 'index'])->name('profile.edit');
+         Route::patch('/profile', [SellerProfileController::class, 'update'])->name('profile.update');
+        Route::put('/profile/password', [SellerProfileController::class, 'updatePassword'])->name('password.update');
     });
 });
 
@@ -105,7 +111,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         // Dashboard
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        // Logout
         Route::post('/logout', [AdminLoginController::class, 'destroy'])->name('logout');
+        // Categories
         Route::resource('categories', CategoryController::class);
 
          // Shops
@@ -124,6 +132,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/sellers', [UserController::class, 'sellers'])->name('sellers.index');
         Route::patch('/sellers/{user}/toggle', [UserController::class, 'sellerToggle'])->name('sellers.toggle');
 
-
-    });
+        });
 });

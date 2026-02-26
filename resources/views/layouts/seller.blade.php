@@ -70,7 +70,7 @@
 
             <div class="nav-section-title">Account</div>
 
-            <a href="#"
+            <a href="{{ route('seller.profile.edit') }}"
                class="nav-item {{ request()->routeIs('seller.profile*') ? 'seller-active' : '' }}">
                 <i class="fa fa-user nav-icon"></i> My Profile
             </a>
