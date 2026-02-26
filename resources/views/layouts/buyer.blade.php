@@ -68,7 +68,7 @@
                 My Profile
             </a>
 
-            <a href="#"
+            <a href="{{ route('buyer.addresses.index') }}"
                class="nav-item {{ request()->routeIs('buyer.addresses*') ? 'active' : '' }}">
                 <i class="fa fa-location-dot nav-icon"></i>
                 Addresses

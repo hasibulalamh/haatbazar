@@ -55,4 +55,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(Shop::class);
     }
+
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function defaultAddress()
+    {
+        return $this->hasOne(Address::class)->where('is_default', true);
+    }
 }

@@ -141,7 +141,7 @@
 
         {{-- Links --}}
         <div class="auth-links">
-            <p>Already have an account? <a href="/login">Login here</a></p>
+            <p>Already have an account? <a href="{{ route('buyer.login') }}">Login here</a></p>
             <a href="/seller/register" class="seller-link">
                 <i class="fa fa-store" style="color:#fcd34d;"></i>
                 <span>Want to sell on HaatBazar? Register as Seller</span>
