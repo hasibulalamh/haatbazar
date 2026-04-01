@@ -84,37 +84,58 @@
     </div>
     <div class="products-grid">
         @forelse($featuredProducts as $product)
-        <a href="{{ route('products.show', $product->slug) }}" class="product-card">
-            <div class="product-img-wrap">
-                @if($product->primaryImage)
-                    <img src="{{ asset('storage/' . $product->primaryImage->image) }}"
-                        alt="{{ $product->name }}" class="product-img">
-                @else
-                    <div class="product-img-placeholder">
-                        <i class="fa fa-image"></i>
-                    </div>
-                @endif
-                @if($product->discount_price)
-                    <span class="product-badge-discount">
-                        {{ round((($product->price - $product->discount_price) / $product->price) * 100) }}% OFF
-                    </span>
-                @endif
-            </div>
-            <div class="product-info">
-                <div class="product-shop">
-                    <i class="fa fa-store"></i> {{ $product->shop->name }}
-                </div>
-                <h3 class="product-name">{{ $product->name }}</h3>
-                <div class="product-price-row">
-                    @if($product->discount_price)
-                        <span class="product-price">৳{{ number_format($product->discount_price, 0) }}</span>
-                        <span class="product-price-old">৳{{ number_format($product->price, 0) }}</span>
+        <div class="product-card">
+            <a href="{{ route('products.show', $product->slug) }}">
+                <div class="product-img-wrap">
+                    @if($product->primaryImage)
+                        <img src="{{ asset('storage/' . $product->primaryImage->image) }}"
+                            alt="{{ $product->name }}" class="product-img">
                     @else
-                        <span class="product-price">৳{{ number_format($product->price, 0) }}</span>
+                        <div class="product-img-placeholder">
+                            <i class="fa fa-image"></i>
+                        </div>
+                    @endif
+                    @if($product->discount_price)
+                        <span class="product-badge-discount">
+                            {{ round((($product->price - $product->discount_price) / $product->price) * 100) }}% OFF
+                        </span>
                     @endif
                 </div>
+                <div class="product-info">
+                    <div class="product-shop">
+                        <i class="fa fa-store"></i> {{ $product->shop->name }}
+                    </div>
+                    <h3 class="product-name">{{ $product->name }}</h3>
+                    <div class="product-price-row">
+                        @if($product->discount_price)
+                            <span class="product-price">৳{{ number_format($product->discount_price, 0) }}</span>
+                            <span class="product-price-old">৳{{ number_format($product->price, 0) }}</span>
+                        @else
+                            <span class="product-price">৳{{ number_format($product->price, 0) }}</span>
+                        @endif
+                    </div>
+                </div>
+            </a>
+            {{-- Add to Cart --}}
+            <div style="padding:0 12px 12px;">
+                @auth('buyer')
+                   <form method="POST" action="{{ route('buyer.cart.add', $product) }}" class="add-to-cart-form">
+
+                        @csrf
+                        <input type="hidden" name="quantity" value="1">
+                       <button type="submit" class="add-to-cart-btn"
+                            style="width:100%; padding:8px; background:linear-gradient(135deg,#6366f1,#4f46e5); color:white; border:none; border-radius:8px; font-size:13px; cursor:pointer; font-weight:600;">
+                            <i class="fa fa-cart-shopping"></i> Add to Cart
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('buyer.login') }}"
+                       style="display:block; text-align:center; padding:8px; background:linear-gradient(135deg,#6366f1,#4f46e5); color:white; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none;">
+                        <i class="fa fa-cart-shopping"></i> Add to Cart
+                    </a>
+                @endauth
             </div>
-        </a>
+        </div>
         @empty
         <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">
             <i class="fa fa-box-open" style="font-size:40px; opacity:0.3; display:block; margin-bottom:12px;"></i>

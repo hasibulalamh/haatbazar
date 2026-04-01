@@ -18,11 +18,14 @@ class Product extends Model
         'is_active',
     ];
 
+    //Casts
     protected $casts = [
         'is_active' => 'boolean',
         'price' => 'decimal:2',
         'discount_price' => 'decimal:2',
     ];
+
+    // Relationships
 
     public function shop()
     {
@@ -42,5 +45,9 @@ class Product extends Model
     public function primaryImage()
     {
     return $this->hasOne(ProductImage::class)->where('is_primary', true);
+    }
+
+    public function cartitems(){
+        return $this->hasMany(CartItem::class);
     }
 }

@@ -65,6 +65,8 @@ class User extends Authenticatable
     }
 
 
+    // Relationships
+
     public function shop()
     {
         return $this->hasOne(Shop::class);
@@ -79,5 +81,9 @@ class User extends Authenticatable
     public function defaultAddress()
     {
         return $this->hasOne(Address::class)->where('is_default', true);
+    }
+
+    public function cartitems(){
+        return $this->hasMany(CartItem::class);
     }
 }

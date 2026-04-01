@@ -11,7 +11,7 @@
     </div>
     <div class="topbar-actions">
         <a href="#" class="btn-icon"><i class="fa fa-bell"></i></a>
-        <a href="#" class="btn-icon"><i class="fa fa-user"></i></a>
+        <a href="{{ route('buyer.profile.edit') }}" class="btn-icon"><i class="fa fa-user"></i></a>
     </div>
 </div>
 

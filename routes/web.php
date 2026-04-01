@@ -20,7 +20,7 @@ use App\Http\Controllers\Buyer\AddressController;
 use App\Http\Controllers\Seller\DashboardController as SellerDashboardController;
 use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
-
+use App\Http\Controllers\Buyer\CartController;
 
 // Public routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -54,6 +54,14 @@ Route::prefix('buyer')->name('buyer.')->group(function () {
         // Addresses
         Route::resource('addresses', AddressController::class)->except(['show']);
         Route::patch('/addresses/{address}/default', [AddressController::class, 'setDefault'])->name('addresses.default');
+
+
+        // Cart
+        Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+        Route::post('/cart/{product}/add', [CartController::class, 'add'])->name('cart.add');
+        Route::patch('/cart/{cartItem}/update', [CartController::class, 'update'])->name('cart.update');
+        Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+        Route::delete('/cart/{cartItem}/remove', [CartController::class, 'remove'])->name('cart.remove');
 
     });
 });

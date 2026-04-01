@@ -51,8 +51,8 @@ function previewAvatar(input) {
 // FORM LOADING STATE
 // ========================================
 document.addEventListener('DOMContentLoaded', function () {
+   document.querySelectorAll('form:not(.add-to-cart-form)').forEach(form => {
     // Submit loading
-    document.querySelectorAll('form').forEach(form => {
         const btn = form.querySelector('.btn-submit');
         if (btn) {
             form.addEventListener('submit', () => btn.classList.add('loading'));
