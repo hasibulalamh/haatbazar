@@ -39,8 +39,9 @@ class Order extends Model
     /** Status badge color — blade এ use হবে */
     public function statusColor(): string
     {
-        return match($this->status) {
+        return match ($this->status) {
             'pending'    => '#fbbf24',
+            'confirmed'  => '#818cf8',
             'processing' => '#a5b4fc',
             'shipped'    => '#38bdf8',
             'delivered'  => '#86efac',

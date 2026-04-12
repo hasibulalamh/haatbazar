@@ -23,11 +23,30 @@
         <h3 style="font-size:14px; font-weight:700; margin-bottom:16px;">
             <i class="fa fa-pen-to-square" style="color:#a5b4fc;"></i> Update Order Status
         </h3>
+
+        @if($order->status === 'pending')
+        {{-- Pending → Confirm button --}}
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <form method="POST" action="{{ route('seller.orders.status', $order) }}">
+                @csrf @method('PATCH')
+                <input type="hidden" name="status" value="confirmed">
+                <button type="submit"
+                    style="padding:12px 28px; background:linear-gradient(135deg,#16a34a,#15803d); color:white; border:none; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+                    <i class="fa fa-circle-check"></i> Confirm Order
+                </button>
+            </form>
+            <span style="font-size:12px; color:var(--text-muted);">
+                <i class="fa fa-info-circle"></i> Confirm করলে buyer কে notification যাবে
+            </span>
+        </div>
+
+        @else
+        {{-- Confirmed বা পরের status → dropdown --}}
         <form method="POST" action="{{ route('seller.orders.status', $order) }}"
               style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
             @csrf @method('PATCH')
             <select name="status" class="form-input" style="flex:1; min-width:180px;">
-                @foreach(['pending','processing','shipped','delivered'] as $s)
+                @foreach(['confirmed','processing','shipped','delivered'] as $s)
                 <option value="{{ $s }}" {{ $order->status === $s ? 'selected' : '' }}>
                     {{ ucfirst($s) }}
                 </option>
@@ -37,21 +56,23 @@
                 <i class="fa fa-check"></i> Update Status
             </button>
         </form>
+        @endif
+
     </div>
     @endif
 
-    {{-- Order Status Tracker --}}
+    {{-- Order Progress Tracker --}}
     <div class="card" style="padding:20px;">
         <h3 style="font-size:14px; font-weight:700; margin-bottom:16px;">
             <i class="fa fa-timeline" style="color:#a5b4fc;"></i> Order Progress
         </h3>
         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            @foreach(['pending','processing','shipped','delivered'] as $step)
+            @foreach(['pending','confirmed','processing','shipped','delivered'] as $step)
             @php
-                $statuses = ['pending','processing','shipped','delivered'];
+                $statuses = ['pending','confirmed','processing','shipped','delivered'];
                 $currentIndex = array_search($order->status, $statuses);
-                $stepIndex = array_search($step, $statuses);
-                $isDone = $stepIndex <= $currentIndex && $order->status !== 'cancelled';
+                $stepIndex    = array_search($step, $statuses);
+                $isDone       = $stepIndex <= $currentIndex && $order->status !== 'cancelled';
             @endphp
             <div style="display:flex; align-items:center; gap:8px;">
                 <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
@@ -59,15 +80,23 @@
                         background:{{ $isDone ? 'rgba(99,102,241,0.2)' : 'rgba(255,255,255,0.04)' }};
                         color:{{ $isDone ? '#a5b4fc' : 'var(--text-muted)' }};
                         border:1px solid {{ $isDone ? '#6366f1' : 'var(--border)' }};">
-                        <i class="fa fa-{{ $step === 'pending' ? 'clock' : ($step === 'processing' ? 'gear' : ($step === 'shipped' ? 'truck' : 'circle-check')) }}"></i>
+                        <i class="fa fa-{{
+                            $step === 'pending'    ? 'clock' :
+                            ($step === 'confirmed'  ? 'circle-check' :
+                            ($step === 'processing' ? 'gear' :
+                            ($step === 'shipped'    ? 'truck' : 'circle-check')))
+                        }}"></i>
                     </div>
-                    <span style="font-size:11px; color:{{ $isDone ? '#a5b4fc' : 'var(--text-muted)' }}; text-transform:capitalize;">{{ $step }}</span>
+                    <span style="font-size:11px; color:{{ $isDone ? '#a5b4fc' : 'var(--text-muted)' }}; text-transform:capitalize;">
+                        {{ $step }}
+                    </span>
                 </div>
                 @if($step !== 'delivered')
-                <div style="width:50px; height:1px; background:{{ $isDone ? '#6366f1' : 'var(--border)' }}; margin-bottom:16px;"></div>
+                <div style="width:40px; height:1px; background:{{ $isDone ? '#6366f1' : 'var(--border)' }}; margin-bottom:16px;"></div>
                 @endif
             </div>
             @endforeach
+
             @if($order->status === 'cancelled')
             <span style="font-size:12px; font-weight:700; color:#fca5a5; background:rgba(239,68,68,0.1); padding:4px 12px; border-radius:20px;">
                 <i class="fa fa-xmark"></i> Cancelled
@@ -105,14 +134,13 @@
             @endforeach
         </div>
 
-        {{-- Items subtotal --}}
         <div style="border-top:1px solid var(--border); margin-top:14px; padding-top:14px; display:flex; justify-content:space-between; font-weight:700;">
             <span>Your Earnings</span>
             <span style="color:#86efac;">৳{{ number_format($order->sellerItems->sum('subtotal'), 0) }}</span>
         </div>
     </div>
 
-    {{-- Buyer + Shipping Info --}}
+    {{-- Buyer + Shipping --}}
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
 
         <div class="card" style="padding:20px;">

@@ -41,7 +41,7 @@ class OrderController extends Controller
 
         return view('seller.orders.index', compact('orders'));
     }
-    
+
     /**
      * Single order detail — seller শুধু তার নিজের items দেখবে।
      */
@@ -85,7 +85,7 @@ class OrderController extends Controller
         }
 
         $request->validate([
-            'status' => 'required|in:pending,processing,shipped,delivered',
+            'status' => 'required|in:pending,confirmed,processing,shipped,delivered',
         ]);
 
         // Cancelled order update করা যাবে না
