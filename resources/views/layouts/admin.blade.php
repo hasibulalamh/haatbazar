@@ -67,7 +67,7 @@
 
                 <div class="nav-section-title">Orders & Finance</div>
 
-                <a href="#" class="nav-item {{ request()->routeIs('admin.orders*') ? 'admin-active' : '' }}">
+                <a href="{{ route('admin.orders.index') }}" class="nav-item {{ request()->routeIs('admin.orders*') ? 'admin-active' : '' }}">
                     <i class="fa fa-bag-shopping nav-icon"></i> Orders
                 </a>
 

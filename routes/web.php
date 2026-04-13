@@ -23,6 +23,7 @@ use App\Http\Controllers\Seller\ProfileController as SellerProfileController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 // Public routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -159,5 +160,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');
         Route::patch('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
         Route::put('/profile/password', [AdminProfileController::class, 'updatePassword'])->name('password.update');
+
+        // Admin Orders
+        Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
     });
 });
