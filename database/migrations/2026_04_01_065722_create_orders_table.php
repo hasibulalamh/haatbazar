@@ -22,7 +22,7 @@ return new class extends Migration
         $table->string('shipping_city');
 
         // Payment
-        $table->enum('payment_method', ['cod', 'bkash'])->default('cod');
+        $table->enum('payment_method', ['cod', 'bkash', 'nagad', 'rocket', 'credit_card'])->default('cod');
         $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
         $table->string('transaction_id')->nullable(); // bKash transaction
 

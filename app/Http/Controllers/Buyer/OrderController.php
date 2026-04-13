@@ -3,23 +3,26 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewOrderForSeller;
+use App\Mail\OrderPlaced;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Order;
-use App\Models\OrderItem;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
     /**
-     * Checkout page — cart items + shipping form দেখাবে।
+     * Checkout page।
      */
     public function checkout()
     {
         /** @var \App\Models\User $user */
         $user = Auth::guard('buyer')->user();
 
-        // Cart empty হলে cart page এ redirect
         $cartItems = $user->cartItems()
             ->with(['product.primaryImage', 'product.shop'])
             ->get();
@@ -29,12 +32,10 @@ class OrderController extends Controller
                 ->with('error', 'Your cart is empty!');
         }
 
-        // Total calculate
         $total = $cartItems->sum(
             fn($item) => ($item->product->discount_price ?? $item->product->price) * $item->quantity
         );
 
-        // Default address auto-fill এর জন্য
         $defaultAddress = $user->addresses()
             ->where('is_default', true)
             ->first();
@@ -42,16 +43,14 @@ class OrderController extends Controller
         return view('buyer.orders.checkout', compact('cartItems', 'total', 'defaultAddress'));
     }
 
-
     /**
-     * Order place করো — cart থেকে order তৈরি করে cart clear করো।
+     * Order place করো।
      */
     public function store(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = Auth::guard('buyer')->user();
 
-        // Validate shipping info
         $request->validate([
             'shipping_name'    => 'required|string|max:100',
             'shipping_phone'   => 'required|string|max:20',
@@ -61,7 +60,6 @@ class OrderController extends Controller
             'notes'            => 'nullable|string|max:500',
         ]);
 
-        // Cart items নাও
         $cartItems = $user->cartItems()
             ->with(['product.shop'])
             ->get();
@@ -71,7 +69,6 @@ class OrderController extends Controller
                 ->with('error', 'Your cart is empty!');
         }
 
-        // Stock check
         foreach ($cartItems as $item) {
             if ($item->quantity > $item->product->stock) {
                 return redirect()->route('buyer.cart.index')
@@ -79,13 +76,13 @@ class OrderController extends Controller
             }
         }
 
-        // Subtotal calculate
         $subtotal = $cartItems->sum(
             fn($item) => ($item->product->discount_price ?? $item->product->price) * $item->quantity
         );
 
-        // Transaction — error হলে rollback
-        DB::transaction(function () use ($user, $request, $cartItems, $subtotal) {
+        // Transaction
+        $order = null;
+        DB::transaction(function () use ($user, $request, $cartItems, $subtotal, &$order) {
 
             $order = Order::create([
                 'user_id'          => $user->id,
@@ -102,7 +99,6 @@ class OrderController extends Controller
                 'notes'            => $request->notes,
             ]);
 
-            // Order items + stock কমাও
             foreach ($cartItems as $item) {
                 $price = $item->product->discount_price ?? $item->product->price;
 
@@ -117,20 +113,44 @@ class OrderController extends Controller
                     'subtotal'       => $price * $item->quantity,
                 ]);
 
-                // Stock কমাও
                 $item->product->decrement('stock', $item->quantity);
             }
 
-            // Cart clear
             $user->cartItems()->delete();
         });
+
+        // Buyer email — Order Placed
+        try {
+            /** @var Order $order */
+            $order->load('items');
+            Mail::to($user->email)->send(new OrderPlaced($order));
+        } catch (\Exception $e) {
+            Log::error('Order placed email failed: ' . $e->getMessage());
+        }
+
+        // Seller email — New Order
+        try {
+            $order->load('items.seller');
+
+            $sellerEmails = $order->items
+                ->pluck('seller.email')
+                ->filter()
+                ->unique()
+                ->values();
+
+            foreach ($sellerEmails as $sellerEmail) {
+                Mail::to($sellerEmail)->send(new NewOrderForSeller($order));
+            }
+        } catch (\Exception $e) {
+            Log::error('Seller email failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('buyer.orders.index')
             ->with('success', 'Order placed successfully! 🎉');
     }
 
     /**
-     * Buyer এর সব orders list।
+     * Buyer এর সব orders।
      */
     public function index()
     {
@@ -153,7 +173,6 @@ class OrderController extends Controller
         /** @var \App\Models\User $user */
         $user = Auth::guard('buyer')->user();
 
-        // অন্য buyer এর order দেখতে পারবে না
         if ($order->user_id !== $user->id) {
             abort(403);
         }
@@ -164,7 +183,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Order cancel — শুধু pending order।
+     * Order cancel।
      */
     public function cancel(Order $order)
     {
@@ -180,7 +199,6 @@ class OrderController extends Controller
         }
 
         DB::transaction(function () use ($order) {
-            // Stock ফিরিয়ে দাও
             foreach ($order->items as $item) {
                 $item->product->increment('stock', $item->quantity);
             }
