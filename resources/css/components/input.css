@@ -1,0 +1,356 @@
+/**
+ * Input Component Styles
+ * Reference: INPUT.md specification
+ *
+ * Types: text, email, password, tel, url, number, date
+ * States: default, focus, error, success, disabled, readonly
+ */
+
+/* ============================================
+   INPUT GROUP (Wrapper)
+   ============================================ */
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    width: 100%;
+}
+
+/* ============================================
+   LABEL STYLES
+   ============================================ */
+
+.input-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-md);
+}
+
+.input-label__required {
+    color: var(--color-error);
+    margin-inline-start: var(--space-2);
+}
+
+/* ============================================
+   INPUT WRAPPER (Container with icon space)
+   ============================================ */
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* ============================================
+   INPUT ELEMENT
+   ============================================ */
+
+.input {
+    /* Layout */
+    width: 100%;
+    min-height: 44px;
+    padding: var(--space-8) var(--space-12);
+    padding-inline-start: calc(var(--space-12) + var(--space-5));
+
+    /* Typography */
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-md);
+    color: var(--color-text-primary);
+
+    /* Appearance */
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    appearance: none;
+
+    /* Interaction */
+    cursor: text;
+    transition: all var(--motion-instant) ease;
+    -webkit-tap-highlight-color: transparent;
+
+    /* Remove default outline */
+    outline: none;
+}
+
+/* Placeholder styling */
+.input::placeholder {
+    color: var(--color-text-secondary);
+}
+
+/* ============================================
+   INPUT WITH ICONS (Adjust padding)
+   ============================================ */
+
+.input--with-icon-start {
+    padding-inline-start: calc(var(--space-12) + 24px + var(--space-5));
+}
+
+.input--with-icon-end {
+    padding-inline-end: calc(var(--space-12) + 24px + var(--space-5));
+}
+
+/* ============================================
+   INPUT STATES
+   ============================================ */
+
+/* Focus State */
+.input:focus {
+    border-color: var(--color-focus);
+    border-width: 2px;
+    padding: var(--space-8) calc(var(--space-12) - 1px);
+    box-shadow:
+        inset 0 0 0 1px rgba(25, 156, 183, 0.3),
+        0 0 0 3px rgba(25, 156, 183, 0.15);
+    outline: var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.input:focus-visible {
+    outline: var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* Error State */
+.input--error {
+    border-color: var(--color-error);
+    border-width: 2px;
+    padding: var(--space-8) calc(var(--space-12) - 1px);
+}
+
+.input--error:focus {
+    border-color: var(--color-focus);
+    outline: var(--color-focus-ring);
+}
+
+/* Disabled State */
+.input:disabled {
+    background-color: var(--color-disabled-bg);
+    border-color: var(--color-disabled);
+    color: var(--color-disabled);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.input:disabled::placeholder {
+    color: var(--color-disabled);
+}
+
+/* Readonly State */
+.input:read-only {
+    background-color: var(--color-surface-raised);
+    border-color: var(--color-border-light);
+    color: var(--color-text-primary);
+    cursor: default;
+}
+
+/* ============================================
+   ICON STYLES
+   ============================================ */
+
+.input-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+    pointer-events: none;
+}
+
+.input-icon-svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 2;
+}
+
+/* Leading Icon */
+.input-icon--start {
+    inset-inline-start: var(--space-12);
+}
+
+/* Trailing Icon */
+.input-icon--end {
+    inset-inline-end: var(--space-12);
+}
+
+/* Error Icon */
+.input-icon--error {
+    color: var(--color-error);
+}
+
+/* ============================================
+   MESSAGE STYLES (Helper/Error)
+   ============================================ */
+
+.input-message {
+    font-size: 12px;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+}
+
+.input-message--helper {
+    color: var(--color-text-secondary);
+    margin-top: var(--space-2);
+}
+
+.input-message--error {
+    color: var(--color-error);
+    margin-top: var(--space-2);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+}
+
+.input-message--error::before {
+    content: "⚠";
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+/* ============================================
+   FOCUS RING FOR GROUP
+   ============================================ */
+
+.input-group:focus-within .input-label {
+    color: var(--color-focus);
+}
+
+/* ============================================
+   DARK MODE
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+    .input {
+        background-color: var(--color-surface-muted);
+        border-color: var(--color-border);
+        color: var(--color-text-primary);
+    }
+
+    .input::placeholder {
+        color: var(--color-text-secondary);
+    }
+
+    .input:focus {
+        border-color: var(--color-focus);
+        box-shadow:
+            inset 0 0 0 1px rgba(102, 217, 232, 0.4),
+            0 0 0 3px rgba(102, 217, 232, 0.15);
+    }
+
+    .input:disabled {
+        background-color: var(--color-surface-strong);
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
+    }
+
+    .input:read-only {
+        background-color: var(--color-surface-raised);
+        border-color: var(--color-border-light);
+        color: var(--color-text-primary);
+    }
+
+    .input-label {
+        color: var(--color-text-primary);
+    }
+
+    .input-message--helper {
+        color: var(--color-text-secondary);
+    }
+
+    .input-message--error {
+        color: var(--color-error);
+    }
+
+    .input-icon {
+        color: var(--color-text-secondary);
+    }
+
+    .input-icon--error {
+        color: var(--color-error);
+    }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .input {
+        transition: none;
+    }
+}
+
+/* ============================================
+   RTL SUPPORT
+   ============================================ */
+
+[dir="rtl"] .input-label,
+html[lang^="ar"] .input-label,
+html[lang^="he"] .input-label,
+html[lang^="ur"] .input-label,
+html[lang^="fa"] .input-label,
+html[lang^="bn"] .input-label {
+    text-align: right;
+}
+
+[dir="rtl"] .input-message,
+html[lang^="ar"] .input-message,
+html[lang^="he"] .input-message,
+html[lang^="ur"] .input-message,
+html[lang^="fa"] .input-message,
+html[lang^="bn"] .input-message {
+    text-align: right;
+}
+
+/* ============================================
+   INPUT TYPES - SPECIFIC STYLING
+   ============================================ */
+
+/* Number input - hide spinners in Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Number input - hide spinners in Chrome/Safari */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Date input */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"] {
+    cursor: pointer;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 640px) {
+    .input {
+        font-size: 16px; /* Prevent zoom on iOS */
+        min-height: 48px;
+    }
+
+    .input-label {
+        font-size: var(--font-size-sm);
+    }
+
+    .input-message {
+        font-size: 11px;
+    }
+}

@@ -10,6 +10,8 @@
 
 @layer components {
     @tailwind components;
+    @import "components/button.css";
+    @import "components/input.css";
 }
 
 @layer utilities {
