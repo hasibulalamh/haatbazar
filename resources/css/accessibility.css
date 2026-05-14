@@ -1,0 +1,610 @@
+/**
+ * ACCESSIBILITY LAYER - HaatBazar Design System
+ * Target: WCAG 2.2 AA Compliance
+ *
+ * This layer defines accessibility patterns and utilities
+ * that ensure keyboard navigation, screen reader support,
+ * and focus management across the application.
+ */
+
+/* ============================================
+   SKIP LINK (First focusable element)
+   ============================================ */
+
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-interactive-primary);
+    color: var(--color-surface-muted);
+    padding: var(--space-8) var(--space-12);
+    text-decoration: none;
+    z-index: var(--z-fixed);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: var(--color-focus-ring);
+}
+
+/* ============================================
+   FOCUS INDICATORS (Keyboard Navigation)
+   ============================================ */
+
+/**
+ * Global focus styles for all interactive elements
+ * Provides clear visual feedback for keyboard navigation
+ */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="link"]:focus-visible,
+[role="menuitem"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="option"]:focus-visible {
+    outline: var(--color-focus-ring);
+    outline-offset: 3px;
+}
+
+/**
+ * Remove default focus outline to prevent double outlines
+ */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+/**
+ * Input Focus States
+ */
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px rgba(25, 156, 183, 0.1);
+}
+
+/**
+ * Disabled State
+ */
+input:disabled,
+textarea:disabled,
+select:disabled,
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/**
+ * Required Input Indicator
+ * Accessible way to show required fields
+ */
+input[required]::after,
+textarea[required]::after,
+select[required]::after {
+    content: " *";
+    color: var(--color-error);
+    font-weight: var(--font-weight-bold);
+}
+
+/* ============================================
+   SCREEN READER ONLY TEXT
+   ============================================ */
+
+/**
+ * Hide visually but keep available to screen readers
+ */
+.sr-only,
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/**
+ * Visible on focus (for skip links, etc)
+ */
+.sr-only-focusable:active,
+.sr-only-focusable:focus,
+.visually-hidden-focusable:active,
+.visually-hidden-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* ============================================
+   BUTTONS - Accessible Styles
+   ============================================ */
+
+button {
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    transition: all var(--motion-instant) var(--motion-easing-cubic);
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--space-8) var(--space-12);
+}
+
+/**
+ * Button States
+ */
+button:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+button:active:not(:disabled) {
+    opacity: 0.8;
+}
+
+button:disabled {
+    background-color: var(--color-disabled-bg);
+    color: var(--color-disabled);
+    cursor: not-allowed;
+}
+
+/**
+ * Button Focus Ring
+ */
+button:focus-visible {
+    outline: var(--color-focus-ring);
+    outline-offset: 3px;
+}
+
+/* ============================================
+   LINKS - Accessible Styles
+   ============================================ */
+
+a {
+    color: var(--color-interactive-primary);
+    text-decoration: underline;
+    transition: color var(--motion-instant) var(--motion-easing-cubic);
+    cursor: pointer;
+}
+
+a:visited {
+    color: var(--color-interactive-secondary);
+}
+
+a:hover {
+    color: var(--color-interactive-primary-hover);
+    text-decoration: underline;
+}
+
+a:focus-visible {
+    outline: var(--color-focus-ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+a:active {
+    color: var(--color-interactive-primary-active);
+}
+
+/**
+ * Remove underline for nav links and buttons
+ */
+nav a,
+.btn,
+[role="button"] {
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   LISTS - Semantic Structure
+   ============================================ */
+
+/**
+ * Ensure lists are properly marked up
+ */
+ul,
+ol {
+    margin: var(--space-12) 0;
+    padding-left: var(--space-24);
+}
+
+li {
+    margin-bottom: var(--space-8);
+}
+
+/**
+ * Remove default list styles for navigation
+ */
+nav ul,
+nav ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================
+   TABLES - Accessible Structure
+   ============================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-16) 0;
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-border);
+}
+
+th {
+    background-color: var(--color-surface-raised);
+    padding: var(--space-12);
+    text-align: left;
+    font-weight: var(--font-weight-semibold);
+    border-bottom: 2px solid var(--color-border);
+    color: var(--color-text-primary);
+}
+
+td {
+    padding: var(--space-12);
+    border-bottom: 1px solid var(--color-border);
+}
+
+tbody tr:hover {
+    background-color: var(--color-surface-raised);
+}
+
+/**
+ * Responsive tables
+ */
+@media (max-width: 768px) {
+    table {
+        font-size: var(--font-size-sm);
+    }
+
+    th,
+    td {
+        padding: var(--space-8);
+    }
+}
+
+/* ============================================
+   LANDMARKS & SEMANTIC HTML
+   ============================================ */
+
+/**
+ * Proper use of semantic HTML for screen readers
+ */
+main {
+    display: block;
+}
+
+header {
+    display: block;
+}
+
+footer {
+    display: block;
+}
+
+nav {
+    display: block;
+}
+
+section {
+    display: block;
+}
+
+article {
+    display: block;
+}
+
+aside {
+    display: block;
+}
+
+/**
+ * Visual separator (with semantic meaning)
+ */
+hr {
+    margin: var(--space-24) 0;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    background: transparent;
+}
+
+/* ============================================
+   ICONS & VISUAL CONTENT
+   ============================================ */
+
+/**
+ * Ensure decorative icons don't interfere with screen readers
+ */
+.icon-decorative,
+[aria-hidden="true"] {
+    user-select: none;
+    pointer-events: none;
+}
+
+/**
+ * Icon buttons must have aria-label
+ */
+button.icon-only {
+    position: relative;
+}
+
+button.icon-only[aria-label] {
+    text-indent: -9999px;
+}
+
+/* ============================================
+   MODAL/DIALOG - Accessible Patterns
+   ============================================ */
+
+/**
+ * Modal backdrop
+ */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal-backdrop);
+}
+
+/**
+ * Modal itself
+ */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--z-modal);
+    background-color: var(--color-surface-muted);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    max-height: 90vh;
+    overflow-y: auto;
+    outline: none;
+}
+
+/**
+ * Modal close button
+ */
+.modal .modal-close {
+    position: absolute;
+    top: var(--space-16);
+    right: var(--space-16);
+    background: transparent;
+    border: none;
+    font-size: var(--font-size-lg);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+}
+
+.modal .modal-close:focus-visible {
+    outline: var(--color-focus-ring);
+    outline-offset: 3px;
+}
+
+/* ============================================
+   DROPDOWN & SELECT MENU - Accessible Patterns
+   ============================================ */
+
+/**
+ * Custom select styling
+ */
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888888' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-8) center;
+    background-size: 12px;
+    padding-right: var(--space-24);
+    appearance: none;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/**
+ * Keyboard focus visible
+ */
+.focus-visible {
+    outline: var(--color-focus-ring);
+    outline-offset: 3px;
+}
+
+/**
+ * High contrast mode support
+ */
+@media (prefers-contrast: more) {
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+        outline-width: 3px;
+        outline-offset: 4px;
+    }
+}
+
+/**
+ * Reduced motion support
+ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   COLOR CONTRAST UTILITIES
+   ============================================ */
+
+/**
+ * Utility classes for ensuring proper contrast
+ * All these combinations meet WCAG 2.2 AA standards
+ */
+
+.contrast-high {
+    color: var(--color-text-primary);
+    background-color: var(--color-surface-muted);
+}
+
+.contrast-medium {
+    color: var(--color-text-secondary);
+    background-color: var(--color-surface-muted);
+}
+
+.contrast-interactive {
+    color: var(--color-surface-muted);
+    background-color: var(--color-interactive-primary);
+}
+
+/* ============================================
+   INTERACTIVE ELEMENT SIZING
+   ============================================ */
+
+/**
+ * Touch Target Sizing (WCAG 2.5.5 - Level AAA)
+ * Minimum 44×44px for all interactive elements
+ */
+button,
+a[role="button"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+[role="button"],
+[role="link"],
+[role="menuitem"],
+[role="option"] {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/**
+ * Padding for touch targets
+ */
+button,
+a[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    padding: var(--space-8) var(--space-12);
+}
+
+/* ============================================
+   LOADING & PROGRESS INDICATORS
+   ============================================ */
+
+/**
+ * Loading spinner (accessible)
+ */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--color-border);
+    border-radius: 50%;
+    border-top-color: var(--color-interactive-primary);
+    animation: spin var(--motion-normal) linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/**
+ * Progress bar
+ */
+progress {
+    width: 100%;
+    height: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--color-border);
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--color-border);
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--color-interactive-primary);
+}
+
+progress::-moz-progress-bar {
+    background-color: var(--color-interactive-primary);
+}
+
+/* ============================================
+   PRINT STYLES (Accessibility for Print)
+   ============================================ */
+
+@media print {
+    .no-print,
+    .sr-only,
+    [role="navigation"],
+    button {
+        display: none;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    h1,
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+
+    table {
+        page-break-inside: avoid;
+    }
+}
