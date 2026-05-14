@@ -14,7 +14,7 @@
 .skip-to-content {
     position: absolute;
     top: -40px;
-    left: 0;
+    inset-inline-start: 0;
     background: var(--color-interactive-primary);
     color: var(--color-surface-muted);
     padding: var(--space-8) var(--space-12);
@@ -48,7 +48,7 @@ textarea:focus-visible,
 [role="tab"]:focus-visible,
 [role="option"]:focus-visible {
     outline: var(--color-focus-ring);
-    outline-offset: 3px;
+    outline-offset: 2px;
 }
 
 /**
@@ -73,7 +73,7 @@ input:focus,
 textarea:focus,
 select:focus {
     border-color: var(--color-focus);
-    box-shadow: 0 0 0 3px rgba(25, 156, 183, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(25, 156, 183, 0.3), 0 0 0 3px rgba(25, 156, 183, 0.15);
 }
 
 /**

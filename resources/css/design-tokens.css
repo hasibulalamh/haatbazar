@@ -195,9 +195,58 @@
 }
 
 /**
- * DARK MODE TOKENS (Future: when dark mode is needed)
- * Uncomment when implementing dark mode support
+ * DARK MODE TOKENS
+ * Uncomment or apply via @media (prefers-color-scheme: dark)
  */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Dark Mode Surface Colors */
+        --color-surface-base: #ffffff;
+        --color-surface-muted: #1a1a1a;
+        --color-surface-raised: #2a2a2a;
+        --color-surface-strong: #3a3a3a;
+
+        /* Dark Mode Text Colors */
+        --color-text-primary: #f5f5f5;
+        --color-text-secondary: #b0b0b0;
+        --color-text-tertiary: #66d9e8;
+
+        /* Dark Mode Shadows */
+        --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+
+        /* Dark Mode Borders */
+        --color-border: #3a3a3a;
+        --color-border-light: #2a2a2a;
+        --color-border-dark: #4a4a4a;
+    }
+}
+
+/**
+ * RTL (Right-to-Left) SUPPORT
+ * Logical properties automatically handle text direction
+ * Apply via [dir="rtl"] or html[lang="bn"]
+ */
+[dir="rtl"],
+html[lang^="ar"],
+html[lang^="he"],
+html[lang^="ur"],
+html[lang^="fa"],
+html[lang^="bn"] {
+    --ltr: -1;
+    --text-align: right;
+    --start: right;
+    --end: left;
+    --margin-start: margin-right;
+    --margin-end: margin-left;
+    --padding-start: padding-right;
+    --padding-end: padding-left;
+    direction: rtl;
+    text-align: right;
+}
 /* @media (prefers-color-scheme: dark) {
   :root {
     --color-surface-base: #ffffff;
