@@ -1,30 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
 
+/* ── LIGHT THEME (default) ───────────────────────── */
 :root {
-    --primary: #16a34a;
-    --primary-dark: #15803d;
-    --primary-light: #bbf7d0;
-    --accent: #f59e0b;
-    --accent-light: #fcd34d;
-    --seller: #d97706;
-    --seller-dark: #b45309;
-    --seller-light: #fcd34d;
-    --admin: #6366f1;
-    --admin-dark: #4f46e5;
-    --admin-light: #a5b4fc;
-    --dark: #0f172a;
-    --dark-2: #1e293b;
-    --dark-3: #334155;
-    --text-primary: #f1f5f9;
-    --text-muted: #94a3b8;
-    --white: #ffffff;
-    --error: #ef4444;
-    --border: rgba(255, 255, 255, 0.08);
-    --glass: rgba(255, 255, 255, 0.04);
-    --shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
-    --radius: 12px;
-    --radius-lg: 24px;
+    --primary:        #F85606;
+    --primary-dark:   #d94e05;
+    --primary-light:  #fff0eb;
+    --primary-text:   #ffffff;
+
+    --bg:             #f5f5f5;
+    --bg-2:           #ffffff;
+    --bg-3:           #f0f0f0;
+    --card:           #ffffff;
+
+    --text:           #212121;
+    --text-muted:     #757575;
+    --text-light:     #9e9e9e;
+    --white:          #ffffff;
+
+    --border:         #e0e0e0;
+    --border-light:   #f0f0f0;
+
+    --shadow:         0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md:      0 4px 16px rgba(0,0,0,0.12);
+    --shadow-lg:      0 8px 32px rgba(0,0,0,0.16);
+
+    --navbar-bg:      #ffffff;
+    --navbar-text:    #212121;
+
+    --seller:         #d97706;
+    --seller-dark:    #b45309;
+    --seller-light:   #fcd34d;
+    --accent:         #f59e0b;
+    --accent-light:   #fcd34d;
+    --admin:          #6366f1;
+    --admin-dark:     #4f46e5;
+    --admin-light:    #a5b4fc;
+
+    --dark:           #0f172a;
+    --dark-2:         #1e293b;
+    --dark-3:         #334155;
+    --text-primary:   #f1f5f9;
+    --glass:          rgba(255,255,255,0.04);
+    --shadow-sm:      0 4px 20px rgba(0,0,0,0.08);
+
+    --radius:         8px;
+    --radius-lg:      16px;
+    --radius-xl:      24px;
+
+    --error:          #ef4444;
+}
+
+/* ── DARK THEME ──────────────────────────────────── */
+[data-theme="dark"] {
+    --primary:        #F85606;
+    --primary-dark:   #d94e05;
+    --primary-light:  #ffcbb0;
+
+    --bg:             #0f0f0f;
+    --bg-2:           #1a1a1a;
+    --bg-3:           #242424;
+    --card:           #1a1a1a;
+
+    --text:           #f5f5f5;
+    --text-muted:     #a0a0a0;
+    --text-light:     #6b6b6b;
+    --white:          #ffffff;
+    --text-primary:   #f1f5f9;
+
+    --border:         rgba(255,255,255,0.08);
+    --border-light:   #222222;
+    --glass:          rgba(255,255,255,0.04);
+
+    --shadow:         0 2px 8px rgba(0,0,0,0.4);
+    --shadow-md:      0 4px 16px rgba(0,0,0,0.5);
+    --shadow-lg:      0 8px 32px rgba(0,0,0,0.6);
+    --shadow-sm:      0 4px 20px rgba(0,0,0,0.3);
+
+    --navbar-bg:      #1a1a1a;
+    --navbar-text:    #f5f5f5;
+
+    --dark:           #0f172a;
+    --dark-2:         #1e293b;
+    --dark-3:         #334155;
 }
 
 * {
@@ -34,11 +91,12 @@
 }
 
 body {
-    font-family: 'DM Sans', sans-serif;
-    background-color: var(--dark);
-    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -48,7 +106,7 @@ a {
 
 button {
     cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 img {
