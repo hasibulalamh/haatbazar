@@ -1,0 +1,283 @@
+/**
+ * Select Component Styles
+ * Reference: SELECT.md specification
+ */
+
+.select-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    width: 100%;
+}
+
+.select-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-md);
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Select Trigger Button */
+.select-trigger {
+    width: 100%;
+    min-height: 44px;
+    padding: var(--space-8) var(--space-12);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-md);
+    color: var(--color-text-primary);
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--motion-instant) ease;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    text-align: left;
+}
+
+.select-trigger:hover:not(:disabled) {
+    border-color: var(--color-interactive-secondary);
+}
+
+.select-trigger:focus-visible {
+    border-color: var(--color-focus);
+    outline: var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.select-trigger:disabled {
+    background-color: var(--color-disabled-bg);
+    border-color: var(--color-disabled);
+    color: var(--color-disabled);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Error State */
+.select-trigger--error {
+    border: 2px solid var(--color-error);
+    padding: var(--space-8) calc(var(--space-12) - 1px);
+}
+
+.select-trigger--error:focus {
+    border-color: var(--color-focus);
+}
+
+/* Chevron Icon */
+.select-chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+    transition: transform var(--motion-instant) ease;
+    pointer-events: none;
+}
+
+.select-trigger--open .select-chevron {
+    transform: rotate(180deg);
+}
+
+/* Select Value */
+.select-value {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Options List */
+.select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: var(--space-2);
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: var(--z-dropdown);
+    list-style: none;
+    padding: 0;
+    min-width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    animation: slideDown var(--motion-fast) ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Option Item */
+.select-option {
+    padding: var(--space-8) var(--space-12);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--motion-instant) ease;
+    outline: none;
+}
+
+.select-option:hover,
+.select-option:focus {
+    background-color: var(--color-surface-raised);
+    color: var(--color-interactive-secondary);
+}
+
+.select-option:first-child {
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.select-option:last-child {
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.select-option[aria-selected="true"] {
+    background-color: rgba(255, 102, 0, 0.1);
+    color: var(--color-interactive-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Native Select (Fallback) */
+.select-native {
+    display: none;
+}
+
+/* Messages */
+.select-message {
+    font-size: 12px;
+    line-height: 1.4;
+    margin-top: var(--space-2);
+}
+
+.select-message--error {
+    color: var(--color-error);
+}
+
+.select-message--helper {
+    color: var(--color-text-secondary);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .select-trigger {
+        background-color: var(--color-surface-muted);
+        border-color: var(--color-border);
+        color: var(--color-text-primary);
+    }
+
+    .select-trigger:hover:not(:disabled) {
+        border-color: var(--color-text-tertiary);
+    }
+
+    .select-options {
+        background-color: var(--color-surface-muted);
+        border-color: var(--color-border);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    .select-option {
+        color: var(--color-text-primary);
+    }
+
+    .select-option:hover,
+    .select-option:focus {
+        background-color: var(--color-surface-raised);
+        color: var(--color-text-tertiary);
+    }
+
+    .select-option[aria-selected="true"] {
+        background-color: rgba(255, 102, 0, 0.2);
+        color: var(--color-interactive-primary);
+    }
+
+    .select-trigger:disabled {
+        background-color: var(--color-surface-strong);
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
+    }
+
+    .select-chevron {
+        color: var(--color-text-secondary);
+    }
+
+    .select-message--error {
+        color: var(--color-error);
+    }
+
+    .select-message--helper {
+        color: var(--color-text-secondary);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .select-trigger,
+    .select-chevron,
+    .select-options,
+    .select-option {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .select-trigger,
+html[lang^="ar"] .select-trigger,
+html[lang^="he"] .select-trigger,
+html[lang^="ur"] .select-trigger,
+html[lang^="fa"] .select-trigger,
+html[lang^="bn"] .select-trigger {
+    text-align: right;
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .select-value,
+html[lang^="ar"] .select-value,
+html[lang^="he"] .select-value,
+html[lang^="ur"] .select-value,
+html[lang^="fa"] .select-value,
+html[lang^="bn"] .select-value {
+    text-align: right;
+}
+
+[dir="rtl"] .select-options,
+html[lang^="ar"] .select-options,
+html[lang^="he"] .select-options,
+html[lang^="ur"] .select-options,
+html[lang^="fa"] .select-options,
+html[lang^="bn"] .select-options {
+    left: auto;
+    right: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .select-options {
+        max-height: 250px;
+    }
+
+    .select-option {
+        padding: var(--space-12) var(--space-12);
+        font-size: 16px;
+    }
+}

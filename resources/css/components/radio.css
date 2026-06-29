@@ -1,0 +1,122 @@
+/**
+ * Radio Component Styles
+ * Reference: RADIO.md specification
+ */
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+}
+
+/* Hide native radio but keep it in DOM for accessibility */
+.radio-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-md);
+}
+
+/* Radio Box (Circle) */
+.radio-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    background-color: white;
+    transition: all var(--motion-instant) ease;
+}
+
+/* Radio Dot Indicator */
+.radio-dot {
+    display: block;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: var(--color-interactive-primary);
+    transition: all var(--motion-instant) ease;
+}
+
+/* Selected State */
+.radio-input:checked ~ .radio-label .radio-box {
+    border-color: var(--color-interactive-primary);
+}
+
+.radio-input:checked ~ .radio-label .radio-dot {
+    width: 8px;
+    height: 8px;
+}
+
+/* Focus State */
+.radio-input:focus-visible ~ .radio-label .radio-box {
+    outline: var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* Hover State */
+.radio-input:not(:disabled):hover ~ .radio-label .radio-box {
+    border-color: var(--color-interactive-primary);
+}
+
+/* Disabled State */
+.radio-input:disabled ~ .radio-label {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.radio-input:disabled ~ .radio-label .radio-box {
+    background-color: var(--color-disabled-bg);
+    border-color: var(--color-disabled);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .radio-box {
+        border-color: var(--color-border);
+        background-color: var(--color-surface-muted);
+    }
+
+    .radio-label {
+        color: var(--color-text-primary);
+    }
+
+    .radio-input:checked ~ .radio-label .radio-box {
+        border-color: var(--color-interactive-primary);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .radio-box,
+    .radio-dot {
+        transition: none;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .radio-label,
+html[lang^="ar"] .radio-label,
+html[lang^="he"] .radio-label,
+html[lang^="ur"] .radio-label,
+html[lang^="fa"] .radio-label,
+html[lang^="bn"] .radio-label {
+    flex-direction: row-reverse;
+}

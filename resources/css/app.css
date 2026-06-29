@@ -12,6 +12,10 @@
     @tailwind components;
     @import "components/button.css";
     @import "components/input.css";
+    @import "components/checkbox.css";
+    @import "components/radio.css";
+    @import "components/select.css";
+    @import "components/textarea.css";
 }
 
 @layer utilities {

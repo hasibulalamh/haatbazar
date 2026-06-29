@@ -1,0 +1,272 @@
+/**
+ * Textarea Component Styles
+ * Reference: TEXTAREA.md specification
+ */
+
+.textarea-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    width: 100%;
+}
+
+.textarea-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    line-height: var(--line-height-md);
+    margin-bottom: var(--space-2);
+}
+
+/* Textarea Element */
+.textarea {
+    width: 100%;
+    min-height: calc(44px * 4);
+    padding: var(--space-8) var(--space-12);
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-md);
+    color: var(--color-text-primary);
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    resize: vertical;
+    appearance: none;
+    outline: none;
+    transition: all var(--motion-instant) ease;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.textarea::placeholder {
+    color: var(--color-text-secondary);
+}
+
+/* Focus State */
+.textarea:focus {
+    border-color: var(--color-focus);
+    border-width: 2px;
+    padding: var(--space-8) calc(var(--space-12) - 1px);
+    box-shadow:
+        inset 0 0 0 1px rgba(25, 156, 183, 0.3),
+        0 0 0 3px rgba(25, 156, 183, 0.15);
+    outline: var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+.textarea:focus-visible {
+    outline: var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* Error State */
+.textarea--error {
+    border-color: var(--color-error);
+    border-width: 2px;
+    padding: var(--space-8) calc(var(--space-12) - 1px);
+}
+
+.textarea--error:focus {
+    border-color: var(--color-focus);
+    outline: var(--color-focus-ring);
+}
+
+/* Disabled State */
+.textarea:disabled {
+    background-color: var(--color-disabled-bg);
+    border-color: var(--color-disabled);
+    color: var(--color-disabled);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.textarea:disabled::placeholder {
+    color: var(--color-disabled);
+}
+
+/* Readonly State */
+.textarea:read-only {
+    background-color: var(--color-surface-raised);
+    border-color: var(--color-border-light);
+    color: var(--color-text-primary);
+    cursor: default;
+}
+
+/* Autosize Adjustment */
+.textarea--autosize {
+    resize: none;
+    overflow: hidden;
+    min-height: auto;
+}
+
+/* Messages */
+.textarea-message {
+    font-size: 12px;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.4;
+}
+
+.textarea-message--error {
+    color: var(--color-error);
+    margin-top: var(--space-2);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+}
+
+.textarea-message--error::before {
+    content: "⚠";
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.textarea-message--helper {
+    color: var(--color-text-secondary);
+    margin-top: var(--space-2);
+}
+
+/* Character Counter */
+.textarea-counter {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-2);
+    transition: color var(--motion-instant) ease;
+}
+
+.textarea-counter--warning {
+    color: var(--color-warning);
+    font-weight: var(--font-weight-semibold);
+}
+
+.textarea-counter--at-limit {
+    color: var(--color-error);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .textarea {
+        background-color: var(--color-surface-muted);
+        border-color: var(--color-border);
+        color: var(--color-text-primary);
+    }
+
+    .textarea::placeholder {
+        color: var(--color-text-secondary);
+    }
+
+    .textarea:focus {
+        border-color: var(--color-focus);
+        box-shadow:
+            inset 0 0 0 1px rgba(102, 217, 232, 0.4),
+            0 0 0 3px rgba(102, 217, 232, 0.15);
+    }
+
+    .textarea:disabled {
+        background-color: var(--color-surface-strong);
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
+    }
+
+    .textarea:read-only {
+        background-color: var(--color-surface-raised);
+        border-color: var(--color-border-light);
+        color: var(--color-text-primary);
+    }
+
+    .textarea-label {
+        color: var(--color-text-primary);
+    }
+
+    .textarea-message--error {
+        color: var(--color-error);
+    }
+
+    .textarea-message--helper {
+        color: var(--color-text-secondary);
+    }
+
+    .textarea-counter {
+        color: var(--color-text-secondary);
+    }
+
+    .textarea-counter--warning {
+        color: var(--color-warning);
+    }
+
+    .textarea-counter--at-limit {
+        color: var(--color-error);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .textarea,
+    .textarea-counter {
+        transition: none;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .textarea-label,
+html[lang^="ar"] .textarea-label,
+html[lang^="he"] .textarea-label,
+html[lang^="ur"] .textarea-label,
+html[lang^="fa"] .textarea-label,
+html[lang^="bn"] .textarea-label {
+    text-align: right;
+}
+
+[dir="rtl"] .textarea-message,
+html[lang^="ar"] .textarea-message,
+html[lang^="he"] .textarea-message,
+html[lang^="ur"] .textarea-message,
+html[lang^="fa"] .textarea-message,
+html[lang^="bn"] .textarea-message {
+    text-align: right;
+}
+
+[dir="rtl"] .textarea-message--error::before,
+html[lang^="ar"] .textarea-message--error::before,
+html[lang^="he"] .textarea-message--error::before,
+html[lang^="ur"] .textarea-message--error::before,
+html[lang^="fa"] .textarea-message--error::before,
+html[lang^="bn"] .textarea-message--error::before {
+    order: 2;
+}
+
+[dir="rtl"] .textarea-message--error,
+html[lang^="ar"] .textarea-message--error,
+html[lang^="he"] .textarea-message--error,
+html[lang^="ur"] .textarea-message--error,
+html[lang^="fa"] .textarea-message--error,
+html[lang^="bn"] .textarea-message--error {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .textarea-counter,
+html[lang^="ar"] .textarea-counter,
+html[lang^="he"] .textarea-counter,
+html[lang^="ur"] .textarea-counter,
+html[lang^="fa"] .textarea-counter,
+html[lang^="bn"] .textarea-counter {
+    text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .textarea {
+        font-size: 16px;
+        min-height: calc(48px * 3);
+    }
+
+    .textarea-label {
+        font-size: var(--font-size-sm);
+    }
+
+    .textarea-message {
+        font-size: 11px;
+    }
+}
