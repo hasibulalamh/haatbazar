@@ -40,15 +40,15 @@
     </div>
     <div class="hero-visual">
         <div class="hero-card-float hero-card-1">
-            <i class="fa fa-microchip" style="color:#a5b4fc; font-size:22px;"></i>
+            <i class="fa fa-microchip" style="color:var(--color-interactive-secondary); font-size:22px;"></i>
             <span>Electronics</span>
         </div>
         <div class="hero-card-float hero-card-2">
-            <i class="fa fa-shirt" style="color:#fcd34d; font-size:22px;"></i>
+            <i class="fa fa-shirt" style="color:var(--color-warning); font-size:22px;"></i>
             <span>Fashion</span>
         </div>
         <div class="hero-card-float hero-card-3">
-            <i class="fa fa-house" style="color:#86efac; font-size:22px;"></i>
+            <i class="fa fa-house" style="color:var(--color-success); font-size:22px;"></i>
             <span>Home & Living</span>
         </div>
         <div class="hero-orb"></div>
@@ -117,28 +117,25 @@
                 </div>
             </a>
             {{-- Add to Cart --}}
-            <div style="padding:0 12px 12px;">
+            <div class="product-actions">
                 @auth('buyer')
-                   <form method="POST" action="{{ route('buyer.cart.add', $product) }}" class="add-to-cart-form">
-
+                    <form method="POST" action="{{ route('buyer.cart.add', $product) }}" class="add-to-cart-form">
                         @csrf
                         <input type="hidden" name="quantity" value="1">
-                       <button type="submit" class="add-to-cart-btn"
-                            style="width:100%; padding:8px; background:linear-gradient(135deg,#6366f1,#4f46e5); color:white; border:none; border-radius:8px; font-size:13px; cursor:pointer; font-weight:600;">
+                        <button type="submit" class="add-to-cart-btn">
                             <i class="fa fa-cart-shopping"></i> Add to Cart
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('buyer.login') }}"
-                       style="display:block; text-align:center; padding:8px; background:linear-gradient(135deg,#6366f1,#4f46e5); color:white; border-radius:8px; font-size:13px; font-weight:600; text-decoration:none;">
+                    <a href="{{ route('buyer.login') }}" class="add-to-cart-btn">
                         <i class="fa fa-cart-shopping"></i> Add to Cart
                     </a>
                 @endauth
             </div>
         </div>
         @empty
-        <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">
-            <i class="fa fa-box-open" style="font-size:40px; opacity:0.3; display:block; margin-bottom:12px;"></i>
+        <div class="product-empty-state">
+            <i class="fa fa-box-open"></i>
             <p>No products available yet.</p>
         </div>
         @endforelse

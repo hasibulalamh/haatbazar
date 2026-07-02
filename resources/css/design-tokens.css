@@ -1,6 +1,7 @@
 /**
  * Design Tokens - HaatBazar Design System
  * Reference: design.md - Online Shopping in Bangladesh
+ * Colors aligned with approved Stitch DESIGN.md palette
  *
  * This file defines all design tokens used across the application.
  * These are CSS custom properties that power the design system.
@@ -12,29 +13,32 @@
      ============================================ */
 
     /* Semantic Surface Colors */
-    --color-surface-base: #000000;
-    --color-surface-muted: #ffffff;
-    --color-surface-raised: #eff0f5;
-    --color-surface-strong: #f5f5f5;
+    --color-surface-base: #251915;
+    --color-surface-muted: #fff8f6;
+    --color-surface-raised: #f5f3f3;
+    --color-surface-strong: #efeded;
 
     /* Text Colors */
-    --color-text-primary: #1a1a1a;
-    --color-text-secondary: #888888;
-    --color-text-tertiary: #199cb7;
-    --color-text-inverse: #0f136d;
+    --color-text-primary: #251915;
+    --color-text-secondary: #58423a;
+    --color-text-tertiary: #8c7168;
+    --color-text-inverse: #ffede8;
 
-    /* Interactive State Colors */
-    --color-interactive-primary: #ff6600;
-    --color-interactive-primary-hover: #e55a00;
-    --color-interactive-primary-active: #cc4d00;
-    --color-interactive-secondary: #199cb7;
-    --color-interactive-secondary-hover: #148299;
-    --color-interactive-secondary-active: #0d667a;
+    /* Interactive State Colors
+       primary = brand CTA orange (matches Stitch price/action color)
+       primary-active = deepest brand orange (matches Stitch primary-container)
+    */
+    --color-interactive-primary: #F85606;
+    --color-interactive-primary-hover: #d94e05;
+    --color-interactive-primary-active: #a63600;
+    --color-interactive-secondary: #003e9c;
+    --color-interactive-secondary-hover: #0040a0;
+    --color-interactive-secondary-active: #001847;
 
-    /* Feedback Colors */
-    --color-success: #388e3c;
+    /* Feedback Colors (matches Stitch semantic feedback spec) */
+    --color-success: #2e7d32;
     --color-success-light: #c8e6c9;
-    --color-error: #d32f2f;
+    --color-error: #c62828;
     --color-error-light: #ffcdd2;
     --color-warning: #f57c00;
     --color-warning-light: #ffe0b2;
@@ -42,7 +46,7 @@
     --color-info-light: #bbdefb;
 
     /* Focus/Accessibility */
-    --color-focus: #199cb7;
+    --color-focus: #a63600;
     --color-focus-ring: 2px solid var(--color-focus);
 
     /* Borders */
@@ -58,7 +62,11 @@
      TYPOGRAPHY TOKENS
      ============================================ */
 
-    /* Font Families */
+    /* Font Families
+       Noto Sans kept as primary (not Inter) because it has native
+       Bengali glyph coverage — Inter falls back to ugly system fonts
+       for Bangla text. Noto Sans still looks clean for Latin/English.
+    */
     --font-family-primary:
         "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Helvetica, Tahoma, Arial, PingFang SC,
@@ -195,40 +203,44 @@
 }
 
 /**
- * DARK MODE TOKENS
- * Uncomment or apply via @media (prefers-color-scheme: dark)
+ * DARK MODE TOKENS — MANUAL ONLY (intentional)
+ * We deliberately do NOT use @media (prefers-color-scheme: dark) here.
+ * HaatBazar's default look must always be the approved light,
+ * Daraz-style theme regardless of the visitor's OS/browser setting.
+ * Dark mode only activates when the site's own toggle button sets
+ * data-theme="dark" on <html> — see the block below.
  */
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* Dark Mode Surface Colors */
-        --color-surface-base: #ffffff;
-        --color-surface-muted: #1a1a1a;
-        --color-surface-raised: #2a2a2a;
-        --color-surface-strong: #3a3a3a;
 
-        /* Dark Mode Text Colors */
-        --color-text-primary: #f5f5f5;
-        --color-text-secondary: #b0b0b0;
-        --color-text-tertiary: #66d9e8;
-
-        /* Dark Mode Shadows */
-        --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-        --shadow-sm:
-            0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-        --shadow-md:
-            0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-        --shadow-lg:
-            0 10px 15px -3px rgba(0, 0, 0, 0.5),
-            0 4px 6px -2px rgba(0, 0, 0, 0.2);
-        --shadow-xl:
-            0 20px 25px -5px rgba(0, 0, 0, 0.5),
-            0 10px 10px -5px rgba(0, 0, 0, 0.1);
-
-        /* Dark Mode Borders */
-        --color-border: #3a3a3a;
-        --color-border-light: #2a2a2a;
-        --color-border-dark: #4a4a4a;
-    }
+/**
+ * DARK MODE TOKENS (manual — for a future navbar toggle button)
+ * Set data-theme="dark" on <html> or <body> to activate.
+ * Mirrors the prefers-color-scheme values above.
+ */
+[data-theme="dark"] {
+    --color-surface-base: #ffede8;
+    --color-surface-muted: #1a120e;
+    --color-surface-raised: #251915;
+    --color-surface-strong: #2f2019;
+    --color-text-primary: #ffede8;
+    --color-text-secondary: #d8c2ba;
+    --color-text-tertiary: #b59a90;
+    --color-interactive-primary: #ff8a5c;
+    --color-interactive-primary-hover: #ffa07c;
+    --color-interactive-primary-active: #ffb59b;
+    --color-border: #3a2a22;
+    --color-border-light: #2f2019;
+    --color-border-dark: #4a362c;
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-sm:
+        0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md:
+        0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg:
+        0 10px 15px -3px rgba(0, 0, 0, 0.5),
+        0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-xl:
+        0 20px 25px -5px rgba(0, 0, 0, 0.5),
+        0 10px 10px -5px rgba(0, 0, 0, 0.1);
 }
 
 /**
@@ -253,16 +265,6 @@ html[lang^="bn"] {
     direction: rtl;
     text-align: right;
 }
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --color-surface-base: #ffffff;
-    --color-surface-muted: #1a1a1a;
-    --color-surface-raised: #2a2a2a;
-    --color-surface-strong: #3a3a3a;
-    --color-text-primary: #f0f0f0;
-    --color-text-secondary: #a0a0a0;
-  }
-} */
 
 /**
  * HIGH CONTRAST MODE SUPPORT
@@ -270,7 +272,7 @@ html[lang^="bn"] {
  */
 @media (prefers-contrast: more) {
     :root {
-        --color-text-secondary: #666666;
+        --color-text-secondary: #3d2e28;
         --color-border: #404040;
         --color-disabled: #999999;
     }
@@ -435,13 +437,11 @@ small,
 }
 
 /**
- * COLOR CONTRAST VALIDATION
- * These combinations meet WCAG 2.2 AA standards (4.5:1 for text)
- *
- * Primary text on light: 19.9:1 ✅
- * Primary text on muted: 19.9:1 ✅
- * Secondary text on light: 4.54:1 ✅
- * Focus color on light: 5.2:1 ✅
- * Error on light: 5.2:1 ✅
- * Success on light: 5.1:1 ✅
+ * COLOR CONTRAST NOTE
+ * Re-verify these against WCAG 2.2 AA (4.5:1 for text) after this
+ * palette change — the original file's measurements were taken
+ * against the old #ff6600-based palette and no longer apply as-is.
+ * Primary text (#251915) on muted (#fff8f6) and error (#c62828) on
+ * muted are comfortably within AA; re-check secondary text (#58423a)
+ * and focus color (#a63600) with a contrast checker before shipping.
  */
