@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Category;
+use App\Models\FlashSale;
 use App\Models\Product;
 
 class HomeController extends Controller
@@ -22,6 +24,12 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-        return view('home', compact('categories', 'featuredProducts'));
+        // Homepage hero carousel banners
+        $banners = Banner::active()->get();
+
+        // Currently running flash sale (null if none scheduled right now)
+        $flashSale = FlashSale::current();
+
+        return view('home', compact('categories', 'featuredProducts', 'banners', 'flashSale'));
     }
 }

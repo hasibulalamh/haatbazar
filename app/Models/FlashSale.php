@@ -30,7 +30,8 @@ class FlashSale extends Model
      */
     public static function current()
     {
-        return static::where('is_active', true)
+        return static::query()
+            ->where('is_active', true)
             ->where('starts_at', '<=', now())
             ->where('ends_at', '>=', now())
             ->with(['items.product.primaryImage'])
